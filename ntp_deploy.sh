@@ -6,7 +6,7 @@ apt-get update
 apt-get install ntp
 
 grep -v 'pool' /etc/ntp.conf
-echo "ua.pool.ntp.org" >> /etc/ntp.conf
+cat /etc/ntp.conf | grep -v ^pool > /etc/ntp.conf.bak
 
 #restart systemctl ntp
 systemctl restart ntp
