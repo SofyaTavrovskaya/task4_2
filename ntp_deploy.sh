@@ -10,4 +10,4 @@ echo "ua.pool.ntp.org" >> /etc/ntp.conf
 
 #restart systemctl ntp
 systemctl restart ntp
-* * * * *  /task4_2/ntp_verify.sh
+* * * * *  ntp_verify.sh
