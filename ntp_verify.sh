@@ -1,10 +1,18 @@
 #!/bin/bash
 
-systemctl status ntp
-if[$? != 0];
-then systemctl start ntp
+systemctl is-active --quiet ntp
+if [ $? != 0 ]
+then
+echo "NOTICE: ntp is not running"
+systemctl start ntp
+fi
 
-diff /etc/ntp.conf /etc/ntp.conf.bak
-if[$? != 0];
-then cp /etc/ntp.conf.bak /etc/ntp.conf
+cmp -s /etc/ntp.conf /etc/ntp.conf.bak
+if [ $? != 0 ]
+then
+echo "NOTICE: /etc/ntp.conf was changed. Calculated diff:"
+diff -Nu /etc/ntp.conf /etc/ntp.conf.bak
+cp -f /etc/ntp.conf.bak /etc/ntp.conf
 systemctl restart ntp
+fi
+
